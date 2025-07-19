@@ -13,13 +13,20 @@ struct BannerAdView: UIViewRepresentable {
             print("Banner ad loaded successfully.")
         }
 
-        //광고 로그 확인
         func bannerView(_ banner: GADBannerView, didFailToReceiveAdWithError error: Error) {
             if let error = error as NSError? {
                 print("Failed to load banner ad: \(error.localizedDescription)")
             } else {
                 print("Failed to load banner ad: Unknown error")
             }
+        }
+        
+        func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+            print("Banner ad recorded an impression.")
+        }
+        
+        func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+            print("Banner ad will present screen.")
         }
     }
 
@@ -29,16 +36,19 @@ struct BannerAdView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> GADBannerView {
         let bannerView = GADBannerView(adSize: GADAdSizeBanner)
-        let testUnitId = "ca-app-pub-3940256099942544/2934735716"
-
-        // 환경 변수에서 광고 단위 ID를 가져옵니다.
-        let adUnitID = ProcessInfo.processInfo.environment["AD_UNIT_ID"] ?? "ERROR" // 기본 테스트 ID
-        print("Ad Unit ID: \(adUnitID)") // 로그로 출력
-
-        bannerView.adUnitID = adUnitID // 환경 변수 사용
-        bannerView.rootViewController = UIApplication.shared.windows.first?.rootViewController
-        bannerView.delegate = context.coordinator // Delegate 설정
+        
+        // 실제 광고 단위 ID 사용
+        bannerView.adUnitID = "ca-app-pub-9390512785486955/9425124606"
+        
+        // 루트 뷰 컨트롤러 설정
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            bannerView.rootViewController = window.rootViewController
+        }
+        
+        bannerView.delegate = context.coordinator
         bannerView.load(GADRequest())
+        
         return bannerView
     }
 
