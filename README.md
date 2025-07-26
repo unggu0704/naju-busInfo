@@ -43,6 +43,11 @@ https://apps.apple.com/kr/app/나주시-버스/id6459411077
 
 ## :white_check_mark: 업데이트 기록 (Update)
 
+### 1.6
+_(25. 07. 26)_
+- 노선 PDF 동적 관리
+- Google Admob 메타데이터 수정 및 설정 변경 
+
 ### 1.5
 _(24. 11. 11)_
 - Google Admob 추가
