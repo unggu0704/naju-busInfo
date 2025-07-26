@@ -12,114 +12,129 @@ struct busInfoResult: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     @State private var isRotating = false
+    @State private var isLoading = false
+    
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Section(header: HStack {
-                Text(busStopName)
-                    .font(.custom("NotoSans-Bold", size: 24))
-                    .lineLimit(1) // 한 줄로 제한
-                    .minimumScaleFactor(0.5) // 최소 축소 비율 설정
-                    .padding(.leading, 20) // 왼쪽 여백 추가
-                Spacer()
-                Text(nextBusStop)
-                    .font(.subheadline)
-                    .lineLimit(1) // 한 줄로 제한
-                    .minimumScaleFactor(0.5) // 최소 축소 비율 설정
-                    .padding(.trailing, 38) // 오른쪽 여백 추가
-                    .padding(.bottom, -10)
-            }.padding(.bottom, -5)
-                .padding(.top, -25)
-            ) {
-                
-                //정류장 정보가 아무것도 없을때 표시
-                if selectedArrival.isEmpty {
-                    ZStack {
-                        VStack {
-                            Spacer()
-                            Text("현재 정류장 버스 정보가 없습니다.")
-                                .multilineTextAlignment(.center)
-                                .padding() // 원하는 여백을 추가합니다.
-                            Spacer()
+        ZStack {
+            VStack(alignment: .leading) {
+                Section(header: HStack {
+                    Text(busStopName)
+                        .font(.custom("NotoSans-Bold", size: 24))
+                        .lineLimit(1) // 한 줄로 제한
+                        .minimumScaleFactor(0.5) // 최소 축소 비율 설정
+                        .padding(.leading, 20) // 왼쪽 여백 추가
+                    Spacer()
+                    Text(nextBusStop)
+                        .font(.subheadline)
+                        .lineLimit(1) // 한 줄로 제한
+                        .minimumScaleFactor(0.5) // 최소 축소 비율 설정
+                        .padding(.trailing, 38) // 오른쪽 여백 추가
+                        .padding(.bottom, -10)
+                }.padding(.bottom, -5)
+                ) {
+                    
+                    //정류장 정보가 아무것도 없을때 표시
+                    if selectedArrival.isEmpty {
+                        ZStack {
+                            VStack {
+                                Spacer()
+                                Text("현재 정류장 버스 정보가 없습니다.")
+                                    .multilineTextAlignment(.center)
+                                    .padding() // 원하는 여백을 추가합니다.
+                                Spacer()
+                            }
                         }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-                List(selectedArrival.indices, id: \.self) { index in
-                    let lineInfo = selectedArrival[index]
-                    
-                    
-                    HStack(spacing: 16) {
-                        if lineInfo.lineName.contains("셔틀")||lineInfo.lineName.contains("우정") || lineInfo.lineName.contains("그린") {
-                            Image(systemName: "bus")
-                                .font(.title)
-                                .foregroundColor(.green)
-                        } else if lineInfo.lineName.contains("99") ||
-                                    lineInfo.lineName.contains("160") || lineInfo.lineName.contains("161"){
-                            Image(systemName: "bus")
-                                .font(.title)
-                                .foregroundColor(.purple)
-                        } else if lineInfo.lineName.contains("급행") || lineInfo.lineName.contains("좌석")  {
-                            Image(systemName: "bus")
-                                .font(.title)
-                                .foregroundColor(.red)
-                                .frame(width: 30)
-                        } else {
-                            Image(systemName: "bus")
-                                .font(.title)
-                                .foregroundColor(.blue)
+                    List(selectedArrival.indices, id: \.self) { index in
+                        let lineInfo = selectedArrival[index]
+                        
+                        
+                        HStack(spacing: 16) {
+                            if lineInfo.lineName.contains("셔틀")||lineInfo.lineName.contains("우정") || lineInfo.lineName.contains("그린") {
+                                Image(systemName: "bus")
+                                    .font(.title)
+                                    .foregroundColor(.green)
+                            } else if lineInfo.lineName.contains("99") ||
+                                        lineInfo.lineName.contains("160") || lineInfo.lineName.contains("161"){
+                                Image(systemName: "bus")
+                                    .font(.title)
+                                    .foregroundColor(.purple)
+                            } else if lineInfo.lineName.contains("급행") || lineInfo.lineName.contains("좌석")  {
+                                Image(systemName: "bus")
+                                    .font(.title)
+                                    .foregroundColor(.red)
+                                    .frame(width: 30)
+                            } else {
+                                Image(systemName: "bus")
+                                    .font(.title)
+                                    .foregroundColor(.blue)
+                            }
+                            
+                            
+                            NavigationLink(destination: LineinfoView(LineID: lineInfo.lineID, Linename: lineInfo.lineName, nowbusStopID: busStopID)){
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(lineInfo.lineName)번")
+                                        .font(.headline)
+                                    
+                                    Text("남은 시간: \(lineInfo.remainMin) 분")
+                                        .font(.subheadline)
+                                    
+                                    Text("도착까지 남은 정류장 갯수: \(lineInfo.remainStop)")
+                                        .font(.subheadline)
+                                }
+                            }
+                            
+                            Spacer()
                         }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
                         
-                        
-                        NavigationLink(destination: LineinfoView(LineID: lineInfo.lineID, Linename: lineInfo.lineName, nowbusStopID: busStopID)){
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("\(lineInfo.lineName)번")
-                                    .font(.headline)
-                                
-                                Text("남은 시간: \(lineInfo.remainMin) 분")
-                                    .font(.subheadline)
-                                
-                                Text("도착까지 남은 정류장 갯수: \(lineInfo.remainStop)")
-                                    .font(.subheadline)
+                        .cornerRadius(10)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                saveToWishList()
+                            }) {
+                                Image(systemName: "heart.fill")
+                            }.alert(isPresented: $showAlert) {
+                                Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+                            }
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                isRotating.toggle()
+                                fetchData(for: busStopID)
+                            }) {
+                                Image(systemName: "arrow.clockwise.circle")
+                                    .rotationEffect(.degrees(isRotating ? 360 : 0))
+                                    .animation(.easeInOut(duration: 0.5), value: isRotating)
                             }
                         }
                         
-                        Spacer()
-                    }
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 16)
-                    
-                    .cornerRadius(10)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
-                }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            saveToWishList()
-                        }) {
-                            Image(systemName: "heart.fill")
-                        }.alert(isPresented: $showAlert) {
-                            Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            isRotating.toggle()
-                            fetchData(for: busStopID)
-                        }) {
-                            Image(systemName: "arrow.clockwise.circle")
-                                .rotationEffect(.degrees(isRotating ? 360 : 0))
-                                .animation(.easeInOut(duration: 0.5), value: isRotating)
-                        }
                     }
                 }
+                // 광고 배너 추가 (VStack 하단에 배치)
+                    HStack {
+                        Spacer() // 좌측 여백을 위해 Spacer 추가
+                        BannerAdView()
+                            .frame(width: 320, height: 50)
+                            .padding(.top)
+                        Spacer() // 우측 여백을 위해 Spacer 추가
+                    }
             }
-            
-            
+
+            if isLoading {
+                LoadingView()
+            }
         }
         .onAppear(){
             fetchData(for: busStopID)
         }
+
     }
     
     
@@ -155,49 +170,70 @@ struct busInfoResult: View {
     
     
     public func fetchData(for busStopID: Int) {
+        DispatchQueue.main.async {
+            isLoading = true
+        }
         
-        
-        // Construct the URL for the API request
         guard var urlComponents = URLComponents(string: "http://121.147.206.212/json/arriveApi") else {
-            print("Invalid URL")
+            DispatchQueue.main.async {
+                isLoading = false
+                alertMessage = "잘못된 URL입니다."
+                showAlert = true
+            }
             return
         }
         
-        urlComponents.queryItems = [        URLQueryItem(name: "BUSSTOP_ID", value: "\(busStopID)")    ]
-        print("API 요청 사이트: " + "\(urlComponents)")
+        urlComponents.queryItems = [URLQueryItem(name: "BUSSTOP_ID", value: "\(busStopID)")]
+        
         guard let url = urlComponents.url else {
-            print("Invalid URL")
+            DispatchQueue.main.async {
+                isLoading = false
+                alertMessage = "URL 생성에 실패했습니다."
+                showAlert = true
+            }
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
+            defer {
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
+            }
+            
             if let error = error {
-                print("Error fetching data: \(error.localizedDescription)")
-                alertMessage = "\(error.localizedDescription)"
-                showAlert = true
+                DispatchQueue.main.async {
+                    alertMessage = "데이터를 불러오는 중 오류 발생: \(error.localizedDescription)"
+                    showAlert = true
+                }
                 return
             }
             
             guard let data = data else {
-                print("No data received")
+                DispatchQueue.main.async {
+                    alertMessage = "받은 데이터가 없습니다."
+                    showAlert = true
+                }
                 return
             }
             
             do {
                 let apiResponse = try JSONDecoder().decode(ApiResponse.self, from: data)
-                let decodedArrivals = apiResponse.arriveList
-                
                 DispatchQueue.main.async {
-                    if decodedArrivals.isEmpty {
-                        print("No bus arrivals found for bus stop ID: \(busStopID)")
+                    if apiResponse.arriveList.isEmpty {
+                        alertMessage = "해당 정류장에 도착 예정인 버스가 없습니다."
+                        showAlert = true
                     } else {
-                        self.selectedArrival = decodedArrivals  // 첫 번째 도착 정보를 선택
+                        selectedArrival = apiResponse.arriveList
                     }
                 }
             } catch {
-                print("Error decoding JSON data: \(error)")
+                DispatchQueue.main.async {
+                    alertMessage = "JSON 데이터를 파싱하는 중 오류가 발생했습니다: \(error.localizedDescription)"
+                    showAlert = true
+                }
             }
         }.resume()
-        
     }
+
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E0772762CBA6B4000F106FA /* searchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0772752CBA6B4000F106FA /* searchResultView.swift */; };
+		6E0772782CBA6B5500F106FA /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0772772CBA6B5500F106FA /* LoadingView.swift */; };
+		6E07727A2CBA6B6300F106FA /* SearchLineResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0772792CBA6B6300F106FA /* SearchLineResultView.swift */; };
 		6E1B7DDB2A404CAA001B3406 /* DB View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7DDA2A404CAA001B3406 /* DB View.swift */; };
 		6E2CCE0F2A67F1FF00BB996B /* LineinfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2CCE0E2A67F1FF00BB996B /* LineinfoView.swift */; };
 		6E40ABB02A1C60F1009AD3E8 /* Main View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E40ABAF2A1C60F1009AD3E8 /* Main View.swift */; };
@@ -19,12 +22,15 @@
 		6E40ABDD2A1C6211009AD3E8 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E40ABDC2A1C6211009AD3E8 /* DB.swift */; };
 		6E4539AD2A3DDEE1000EFEB3 /* searchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4539AC2A3DDEE1000EFEB3 /* searchResultView.swift */; };
 		6E5EDF4D2C2023D3004F8F61 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5EDF4C2C2023D3004F8F61 /* NetworkMonitor.swift */; };
+		6E7E2FA02CD7C6C800BC2929 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6E7E2F9F2CD7C6C800BC2929 /* GoogleMobileAds */; };
 		6E8778B22A40F9500011DF22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E40ABB12A1C60F3009AD3E8 /* Assets.xcassets */; };
 		6E9218512A288D6300877C36 /* searchBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC8C65E2A2222EF00AE86A2 /* searchBus.swift */; };
 		6E9218522A288D6300877C36 /* searchBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC8C65E2A2222EF00AE86A2 /* searchBus.swift */; };
 		6E9218532A288D7000877C36 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E40ABDC2A1C6211009AD3E8 /* DB.swift */; };
 		6E9218542A288D7100877C36 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E40ABDC2A1C6211009AD3E8 /* DB.swift */; };
 		6EBB84592BA5E85200EE1395 /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBB84582BA5E85200EE1395 /* PDFViewer.swift */; };
+		6EC531DA2CD7C23C003DBB20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC531D92CD7C22D003DBB20 /* AppDelegate.swift */; };
+		6EC531DC2CD7C2E3003DBB20 /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC531DB2CD7C2DE003DBB20 /* BannerAdView.swift */; };
 		6EC8C65F2A2222EF00AE86A2 /* searchBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC8C65E2A2222EF00AE86A2 /* searchBus.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E0772752CBA6B4000F106FA /* searchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchResultView.swift; sourceTree = "<group>"; };
+		6E0772772CBA6B5500F106FA /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		6E0772792CBA6B6300F106FA /* SearchLineResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLineResultView.swift; sourceTree = "<group>"; };
 		6E1B7DDA2A404CAA001B3406 /* DB View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DB View.swift"; sourceTree = "<group>"; };
 		6E1D58332AFC789B00CAE257 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6E2CCE0E2A67F1FF00BB996B /* LineinfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineinfoView.swift; sourceTree = "<group>"; };
@@ -64,6 +73,8 @@
 		6E4539AC2A3DDEE1000EFEB3 /* searchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchResultView.swift; sourceTree = "<group>"; };
 		6E5EDF4C2C2023D3004F8F61 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		6EBB84582BA5E85200EE1395 /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		6EC531D92CD7C22D003DBB20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6EC531DB2CD7C2DE003DBB20 /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
 		6EC8C65E2A2222EF00AE86A2 /* searchBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchBus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E7E2FA02CD7C6C800BC2929 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +110,7 @@
 				6E40ABAC2A1C60F1009AD3E8 /* app */,
 				6E40ABC22A1C60F3009AD3E8 /* appTests */,
 				6E40ABCC2A1C60F3009AD3E8 /* appUITests */,
+				6E7E2F9E2CD7C6C800BC2929 /* Frameworks */,
 				6E40ABAB2A1C60F1009AD3E8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -115,6 +128,9 @@
 		6E40ABAC2A1C60F1009AD3E8 /* app */ = {
 			isa = PBXGroup;
 			children = (
+				6EC531DB2CD7C2DE003DBB20 /* BannerAdView.swift */,
+				6EC531D92CD7C22D003DBB20 /* AppDelegate.swift */,
+				6E0772792CBA6B6300F106FA /* SearchLineResultView.swift */,
 				6E1D58332AFC789B00CAE257 /* Info.plist */,
 				6E40ABAF2A1C60F1009AD3E8 /* Main View.swift */,
 				6E40ABDC2A1C6211009AD3E8 /* DB.swift */,
@@ -125,9 +141,11 @@
 				6E40ABB32A1C60F3009AD3E8 /* Preview Content */,
 				6E4539AC2A3DDEE1000EFEB3 /* searchResultView.swift */,
 				6E1B7DDA2A404CAA001B3406 /* DB View.swift */,
+				6E0772752CBA6B4000F106FA /* searchResultView.swift */,
 				6E2CCE0E2A67F1FF00BB996B /* LineinfoView.swift */,
 				6EBB84582BA5E85200EE1395 /* PDFViewer.swift */,
 				6E5EDF4C2C2023D3004F8F61 /* NetworkMonitor.swift */,
+				6E0772772CBA6B5500F106FA /* LoadingView.swift */,
 			);
 			path = app;
 			sourceTree = "<group>";
@@ -155,6 +173,13 @@
 				6E40ABCF2A1C60F3009AD3E8 /* appUITestsLaunchTests.swift */,
 			);
 			path = appUITests;
+			sourceTree = "<group>";
+		};
+		6E7E2F9E2CD7C6C800BC2929 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +270,9 @@
 				Base,
 			);
 			mainGroup = 6E40ABA12A1C60F1009AD3E8;
+			packageReferences = (
+				6EC531D62CD7C156003DBB20 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			productRefGroup = 6E40ABAB2A1C60F1009AD3E8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -291,11 +319,16 @@
 				6EC8C65F2A2222EF00AE86A2 /* searchBus.swift in Sources */,
 				6E1B7DDB2A404CAA001B3406 /* DB View.swift in Sources */,
 				6E4539AD2A3DDEE1000EFEB3 /* searchResultView.swift in Sources */,
+				6EC531DA2CD7C23C003DBB20 /* AppDelegate.swift in Sources */,
 				6E40ABB72A1C60F3009AD3E8 /* Persistence.swift in Sources */,
+				6EC531DC2CD7C2E3003DBB20 /* BannerAdView.swift in Sources */,
+				6E0772782CBA6B5500F106FA /* LoadingView.swift in Sources */,
 				6E40ABBA2A1C60F3009AD3E8 /* app.xcdatamodeld in Sources */,
 				6E40ABB02A1C60F1009AD3E8 /* Main View.swift in Sources */,
+				6E0772762CBA6B4000F106FA /* searchResultView.swift in Sources */,
 				6E5EDF4D2C2023D3004F8F61 /* NetworkMonitor.swift in Sources */,
 				6E2CCE0F2A67F1FF00BB996B /* LineinfoView.swift in Sources */,
+				6E07727A2CBA6B6300F106FA /* SearchLineResultView.swift in Sources */,
 				6E40ABDD2A1C6211009AD3E8 /* DB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +373,7 @@
 		6E40ABD12A1C60F3009AD3E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AD_UNIT_ID = "ca-app-pub-9390512785486955/8823553097";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -403,6 +437,7 @@
 		6E40ABD22A1C60F3009AD3E8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AD_UNIT_ID = "ca-app-pub-9390512785486955/8823553097";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -460,6 +495,8 @@
 		6E40ABD42A1C60F3009AD3E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AD_APP_ID = "ca-app-pub-9390512785486955~8205957065";
+				AD_UNIT_ID = "ca-app-pub-9390512785486955/8823553097";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -482,6 +519,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
+				NEW_SETTING = "ㄴㅇㄹㄴㅁㅇㄹㄴㅁㅇㄹ";
+				NEW_SETTING1 = "";
+				"NEW_SETTING1[arch=*]" = "";
+				"NEW_SETTING[arch=*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = kr.xoul.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -493,6 +534,8 @@
 		6E40ABD52A1C60F3009AD3E8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AD_APP_ID = "ca-app-pub-9390512785486955~8205957065";
+				AD_UNIT_ID = "ca-app-pub-9390512785486955/8823553097";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -515,6 +558,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
+				NEW_SETTING = "";
+				NEW_SETTING1 = "";
 				PRODUCT_BUNDLE_IDENTIFIER = kr.xoul.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -635,6 +680,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6EC531D62CD7C156003DBB20 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6E7E2F9F2CD7C6C800BC2929 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EC531D62CD7C156003DBB20 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6E40ABB82A1C60F3009AD3E8 /* app.xcdatamodeld */ = {

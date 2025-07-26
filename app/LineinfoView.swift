@@ -66,148 +66,154 @@ struct LineinfoView: View {
     @StateObject private var networkMonitor = NetworkMonitor()
     @State private var showAlert = false
     @State private var alertMessage = "" // 에러 메시지를 저장할 변수
-    
     @State private var scrollToIndex: Int = 0
+    @State private var isLoading = true
+    
     var body: some View {
         ScrollViewReader { proxy in
-            
-            VStack {
-                if selectedLine.isEmpty {
-                    Text("노선 정보가 없습니다. (나주버스만 제공됩니다.)")
-                } else {
-                    ScrollView {
-                        VStack {
-                            ForEach(selectedLine.indices, id: \.self) { index in
-                                
-                                HStack(alignment: .center, spacing: 8) {
-                                    if let location = findBusLocation(for: selectedLine[index].busStopID) {
-                                        if Linename.contains("셔틀") || Linename.contains("우정") || Linename.contains("그린") {
-                                            Image(systemName: "bus")
-                                                .font(.title)
-                                                .foregroundColor(.green)
-                                                .frame(width: 30) // 버스 그림의 너비를 지정해줍니다.
-                                        } else if Linename.contains("99") ||
-                                                    Linename.contains("161") || Linename.contains("160") {
-                                            Image(systemName: "bus")
-                                                .font(.title)
-                                                .foregroundColor(.purple)
-                                                .frame(width: 30) // 버스 그림의 너비를 지정해줍니다.
-                                        }  else if Linename.contains("급행") || Linename.contains("좌석")  {
-                                            Image(systemName: "bus")
-                                                .font(.title)
+            ZStack {
+                VStack {
+                    if selectedLine.isEmpty {
+                        Text("노선 정보가 없습니다. (나주버스만 제공됩니다.)")
+                    } else {
+                        ScrollView {
+                            VStack {
+                                ForEach(selectedLine.indices, id: \.self) { index in
+                                    
+                                    HStack(alignment: .center, spacing: 8) {
+                                        if let location = findBusLocation(for: selectedLine[index].busStopID) {
+                                            if Linename.contains("셔틀") || Linename.contains("우정") || Linename.contains("그린") {
+                                                Image(systemName: "bus")
+                                                    .font(.title)
+                                                    .foregroundColor(.green)
+                                                    .frame(width: 30) // 버스 그림의 너비를 지정해줍니다.
+                                            } else if Linename.contains("99") ||
+                                                        Linename.contains("161") || Linename.contains("160") {
+                                                Image(systemName: "bus")
+                                                    .font(.title)
+                                                    .foregroundColor(.purple)
+                                                    .frame(width: 30) // 버스 그림의 너비를 지정해줍니다.
+                                            }  else if Linename.contains("급행") || Linename.contains("좌석")  {
+                                                Image(systemName: "bus")
+                                                    .font(.title)
+                                                    .foregroundColor(.red)
+                                                    .frame(width: 30)
+                                            } else {
+                                                Image(systemName: "bus")
+                                                    .font(.title)
+                                                    .foregroundColor(.blue)
+                                                    .frame(width: 30) // 버스 그림의 너비를 지정해줍니다.
+                                            }
+                                            
+                                        } else if (nowbusStopID == selectedLine[index].busStopID) {
+                                            Circle()
+                                                .offset(x: -2)
+                                                .frame(width: 30, height: 15)
                                                 .foregroundColor(.red)
-                                                .frame(width: 30)
                                         } else {
-                                            Image(systemName: "bus")
-                                                .font(.title)
+                                            Circle()
+                                                .frame(width: 25, height: 10)
                                                 .foregroundColor(.blue)
-                                                .frame(width: 30) // 버스 그림의 너비를 지정해줍니다.
                                         }
                                         
-                                    } else if (nowbusStopID == selectedLine[index].busStopID) {
-                                        Circle()
-                                            .offset(x: -2)
-                                            .frame(width: 30, height: 15)
-                                            .foregroundColor(.red)
-                                    } else {
-                                        Circle()
-                                            .frame(width: 25, height: 10)
-                                            .foregroundColor(.blue)
-                                    }
+                                        if (nowbusStopID == selectedLine[index].busStopID) {
+                                            Text("\(selectedLine[index].busStopName)")
+                                                .font(.headline)
+                                                .id(-1) // 최초 스크롤 위치를 이동시키기 위한 ID
+                                                .padding()
+                                        } else {
+                                            Text("\(selectedLine[index].busStopName)")
+                                                .font(.headline)
+                                                .padding()
+                                        }
+                                        
+                                        if let location = findBusLocation(for: selectedLine[index].busStopID) {
+                                            Text("\(location.busNo)")
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
+                                        }
+                                        
+                                        Spacer() // 버스 정류장 점과 버스 정류장 이름을 수평으로 맞추기 위해 Spacer 추가
+                                        if (nowbusStopID == selectedLine[index].busStopID) {
+                                            Text("내 위치 ")
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
+                                        }
+                                    }.padding(.vertical, -10)
+                                    Divider()
                                     
-                                    if (nowbusStopID == selectedLine[index].busStopID) {
-                                        Text("\(selectedLine[index].busStopName)")
-                                            .font(.headline)
-                                            .id(-1) // 최초 스크롤 위치를 이동시키기 위한 ID
-                                            .padding()
-                                    } else {
-                                        Text("\(selectedLine[index].busStopName)")
-                                            .font(.headline)
-                                            .padding()
-                                    }
-                                    
-                                    if let location = findBusLocation(for: selectedLine[index].busStopID) {
-                                        Text("\(location.busNo)")
-                                            .font(.subheadline)
-                                            .foregroundColor(.gray)
-                                    }
-                                    
-                                    Spacer() // 버스 정류장 점과 버스 정류장 이름을 수평으로 맞추기 위해 Spacer 추가
-                                    if (nowbusStopID == selectedLine[index].busStopID) {
-                                        Text("내 위치 ")
-                                            .font(.subheadline)
-                                            .foregroundColor(.gray)
-                                    }
-                                }.padding(.vertical, -10)
-                                Divider()
-                                
-                            } // foreach 대괄호
-                            .foregroundColor(.gray)
-                        }.navigationBarTitle("\(Linename) 번 버스 전체 정보 ")
-                            .onAppear {
-                                proxy.scrollTo(-1, anchor: .center)
-                            }
-                    }.toolbar {
-                        ToolbarItemGroup(placement: .navigationBarTrailing) {
-                            Spacer()
-                            
-                            Menu {
-                                Button(action: {
-                                    saveToWishList()
-                                }) {
-                                    Label("즐겨찾기", systemImage: "heart.fill")
+                                } // foreach 대괄호
+                                .foregroundColor(.gray)
+                            }.navigationBarTitle("\(Linename) 번 버스 전체 정보 ")
+                                .onAppear {
+                                    proxy.scrollTo(-1, anchor: .center)
                                 }
-                                .alert(isPresented: $showAlert) {
-                                    Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+                        }.toolbar {
+                            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                                Spacer()
+                                
+                                Menu {
+                                    Button(action: {
+                                        saveToWishList()
+                                    }) {
+                                        Label("즐겨찾기", systemImage: "heart.fill")
+                                    }
+                                    .alert(isPresented: $showAlert) {
+                                        Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+                                    }
+                                    
+                                    Button(action: {
+                                        showPDFViewer = true
+                                    }) {
+                                        Label("시간표 보기", systemImage: "calendar")
+                                    }
+                                } label: {
+                                    Image(systemName: "ellipsis.circle")
                                 }
                                 
                                 Button(action: {
-                                    showPDFViewer = true
+                                    if networkMonitor.isConnected {
+                                        isRotating.toggle()
+                                        fetchLineData(for: LineID)
+                                        fetchLocationData(for: LineID)
+                                        print("버튼 실행")
+                                    } else {
+                                        alertMessage = "네트워크 연결이 필요합니다. 연결을 확인해주세요."
+                                        showAlert = true
+                                    }
                                 }) {
-                                    Label("시간표 보기", systemImage: "calendar")
+                                    Image(systemName: "arrow.clockwise.circle")
+                                        .rotationEffect(.degrees(isRotating ? 360 : 0))
+                                        .animation(.easeInOut(duration: 0.5), value: isRotating)
                                 }
-                            } label: {
-                                Image(systemName: "ellipsis.circle")
-                            }
-                            
-                            Button(action: {
-                                if networkMonitor.isConnected {
-                                    isRotating.toggle()
-                                    fetchLineData(for: LineID)
-                                    fetchLocationData(for: LineID)
-                                    print("버튼 실행")
-                                } else {
-                                    alertMessage = "네트워크 연결이 필요합니다. 연결을 확인해주세요."
-                                    showAlert = true
-                                }
-                            }) {
-                                Image(systemName: "arrow.clockwise.circle")
-                                    .rotationEffect(.degrees(isRotating ? 360 : 0))
-                                    .animation(.easeInOut(duration: 0.5), value: isRotating)
                             }
                         }
-                    }
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
-                    }
-                    .padding(.horizontal, 16)
-                    .listStyle(PlainListStyle())
-                    .overlay(
-                        // Draw the connecting line with a Path
-                        Path { path in
-                            if selectedLine.indices.contains(0), selectedLine.indices.contains(selectedLine.count - 1) {
-                                let firstPoint = CGPoint(x: 29, y: 0) // 첫 번째 정류장 위치
-                                let lastPoint = CGPoint(x: 29, y: UIScreen.main.bounds.height + 50) // 화면 아래쪽으로 경로를 연결
-                                path.move(to: firstPoint)
-                                path.addLine(to: lastPoint)
-                            }
+                        .alert(isPresented: $showAlert) {
+                            Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
                         }
-                        .stroke(Color.gray, lineWidth: 2)
-                    )
-                    .cornerRadius(10) // 모서리를 둥글게 만듭니다.
-                } // else 종료
+                        .padding(.horizontal, 16)
+                        .listStyle(PlainListStyle())
+                        .overlay(
+                            // Draw the connecting line with a Path
+                            Path { path in
+                                if selectedLine.indices.contains(0), selectedLine.indices.contains(selectedLine.count - 1) {
+                                    let firstPoint = CGPoint(x: 29, y: 0) // 첫 번째 정류장 위치
+                                    let lastPoint = CGPoint(x: 29, y: UIScreen.main.bounds.height + 50) // 화면 아래쪽으로 경로를 연결
+                                    path.move(to: firstPoint)
+                                    path.addLine(to: lastPoint)
+                                }
+                            }
+                                .stroke(Color.gray, lineWidth: 2)
+                        )
+                        .cornerRadius(10) // 모서리를 둥글게 만듭니다.
+                    } // else 종료
+                    
+                }
                 
-            } // VStack 대괄호
+                if isLoading {
+                    LoadingView()
+                }
+            }
             .navigationBarTitle("\(Linename)번 버스 위치 정보 ")
             .onAppear {
                 if networkMonitor.isConnected {
@@ -233,12 +239,14 @@ struct LineinfoView: View {
         guard networkMonitor.isConnected else {
             alertMessage = "네트워크 연결이 필요합니다. 연결을 확인해주세요."
             showAlert = true
+            isLoading = false
             return
         }
         
         // Construct the URL for the API request
         guard var urlComponents = URLComponents(string: "http://121.147.206.212/json/lineStationInfo") else {
             print("Invalid URL")
+            isLoading = false
             return
         }
         
@@ -252,6 +260,12 @@ struct LineinfoView: View {
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
+            defer {
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
+            }
+            
             if let error = error {
                 print("Error fetching data: \(error.localizedDescription)")
                 alertMessage = "\(error.localizedDescription)"

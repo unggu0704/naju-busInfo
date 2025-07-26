@@ -32,52 +32,55 @@ struct Arrival: Codable, Identifiable, Equatable, Hashable {
 
 public struct SearchResultView: View {
     @Binding var busstopName: String    // 버스 이름 변수
-    @State private var isDataLoaded = false
+    @State private var isLoading = true 
     @State private var busStopNames: [String] = []  // 정류장 이름 배열 추가
     @State private var nextBusStops: [String] = []  // 정류장 이름 배열 추가
     @State private var busStopIDs: [Int] = []  // 정류장 이름 배열 추가
     @State private var isBool:Bool = false
     @State private var isPresented = false
     public var body: some View {
-        VStack {
-            if isDataLoaded {
-
-                    
-                    List(busStopNames.indices, id: \.self) { index in
-                        
-                        //다음 정류장 방향 같은 경우 미리 " 방향"을 붙여서 전달한다! 240318 수정
-                        NavigationLink(destination: busInfoResult(busStopName: busStopNames[index], busStopID: busStopIDs[index], nextBusStop: nextBusStops[index].isEmpty ? "다음 정류장 없음" : nextBusStops[index] + " 방향")){
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("정류장 이름: \(busStopNames[index])")
-                                    .font(.headline)
-                                    .foregroundColor(.blue)
-                                
-                                
-                                if nextBusStops[index].isEmpty {
-                                    Text("다음 정류장 없음")
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                } else {
-                                    Text("\(nextBusStops[index]) 방향")
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                }
-                                
-                                
-                                Divider()
+        ZStack {
+            VStack {
+                if busStopNames.isEmpty {
+                    Spacer()
+                    Text("검색된 정류장이 없습니다.")
+                }
+                List(busStopNames.indices, id: \.self) { index in
+                    //다음 정류장 방향 같은 경우 미리 " 방향"을 붙여서 전달한다! 240318 수정
+                    NavigationLink(destination: busInfoResult(busStopName: busStopNames[index], busStopID: busStopIDs[index], nextBusStop: nextBusStops[index].isEmpty ? "다음 정류장 없음" : nextBusStops[index] + " 방향")){
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("정류장 이름: \(busStopNames[index])")
+                                .font(.headline)
+                                .foregroundColor(.blue)
+                            
+                            
+                            if nextBusStops[index].isEmpty {
+                                Text("다음 정류장 없음")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            } else {
+                                Text("\(nextBusStops[index]) 방향")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
                             }
+                            
+                            
+                            Divider()
                         }
-                    }.navigationTitle("검색결과")
-                    
-                
-            } else {
-                Text("Loading...")
+                    }
+                }.navigationTitle("검색결과")
+            }
+            if isLoading {
+                LoadingView()
             }
         } .onAppear {
             searchBusStopNames(by: busstopName)
         }
         
-        
+        // 광고 배너 추가
+          BannerAdView()
+              .frame(width: 320, height: 50)
+              .padding(.top)
         
     }
     
@@ -94,21 +97,20 @@ public struct SearchResultView: View {
         do {
             let fetchedItems = try context.fetch(fetchRequest)
             guard !fetchedItems.isEmpty else {
-                print("Bus stops not found")
                 busStopNames = []
-                isDataLoaded = true
+                isLoading = false
                 return
             }
             
             busStopNames = fetchedItems.compactMap { $0.busStopName }
             nextBusStops = fetchedItems.compactMap { $0.nextBusStop }
             busStopIDs = fetchedItems.compactMap {Int($0.busStopID) }
-            isDataLoaded = true
+            isLoading = false
         } catch {
             print("Error fetching bus stop data: \(error)")
             busStopNames = []
             nextBusStops = []
-            isDataLoaded = true
+            isLoading = false
         }
     }
     

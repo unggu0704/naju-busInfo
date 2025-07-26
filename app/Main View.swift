@@ -5,6 +5,7 @@ import Foundation
 @main
 struct appApp: App {
     let persistenceController = PersistenceController.shared
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
@@ -148,6 +149,10 @@ struct ContentView: View {
                         }
                     }
                 }
+                // 광고 배너 추가
+                  BannerAdView()
+                      .frame(width: 320, height: 50)
+                      .padding(.top)
             }
 
         }.onAppear {
